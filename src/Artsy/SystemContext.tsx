@@ -53,6 +53,7 @@ export interface SystemContextProps {
    * and `USER_ACCESS_TOKEN` environment variables if available.
    */
   user?: User
+  userAgent?: string
 }
 
 export const SystemContext = React.createContext<SystemContextProps>({})
@@ -66,9 +67,10 @@ export const SystemContextProvider: SFC<SystemContextProps> = ({
   ...props
 }) => {
   const user = getUser(props.user)
+  const { userAgent } = props
 
   const relayEnvironment =
-    props.relayEnvironment || createRelaySSREnvironment({ user })
+    props.relayEnvironment || createRelaySSREnvironment({ user, userAgent })
 
   const [isFetching, setIsFetching] = useState(false)
 
